@@ -1,0 +1,138 @@
+<?xml version="1.0" encoding="utf-8"?>
+<executable>
+    <category>Vesselness</category>
+    <title>Antiga Vesselness Filter</title>
+    <description>
+        Antiga Vesselness filter, Generalization of Frangi vesselness.
+    </description>
+    <version>1.0</version>
+    <documentation-url></documentation-url>
+    <license></license>
+    <contributor>Jonas Lamy</contributor>
+
+    <parameters>
+        <label>
+            Scale space parameters
+        </label>
+        <description>
+            Scale parameters are defined by smallest scale, largest scale and the number of scales analysed in between
+            [scaleMin,scaleMax]
+        </description>
+
+        <double>
+            <name>sigmaMin</name>
+            <flag>m</flag>
+            <longflag>sigmaMin</longflag>
+            <description>minimum sigma</description>
+            <label>minimum sigma</label>
+            <default>1</default>
+            <constraints>
+                <minimum>0</minimum>
+                <maximum>50</maximum>
+                <step>.01</step>
+            </constraints>
+        </double>
+
+        <double>
+            <name>sigmaMax</name>
+            <flag>M</flag>
+            <longflag>sigmaMax</longflag>
+            <description>maximum sigma</description>
+            <label>maximum sigma</label>
+            <default>1</default>
+            <constraints>
+                <minimum>0</minimum>
+                <maximum>50</maximum>
+                <step>.01</step>
+            </constraints>
+        </double>
+
+        <integer>
+            <name>numberOfScales</name>
+            <flag>n</flag>
+            <longflag>nbSteps</longflag>
+            <description>Number of scales between [sigmaMin,sigmaMax]</description>
+            <label>Scales</label>
+            <default>4</default>
+            <constraints>
+                <minimum>2</minimum>
+                <maximum>30</maximum>
+                <step>1</step>
+            </constraints>
+        </integer>
+
+    </parameters>
+
+    <parameters>
+        <label>
+            Frangi's parameters
+        </label>
+        <double>
+            <name>alpha</name>
+            <label>alpha</label>
+            <flag>a</flag>
+            <longflag>alpha</longflag>
+            <default>0.5</default>
+            <constraints>
+                <minimum>0</minimum>
+                <maximum>1</maximum>
+                <step>0.01</step>
+            </constraints>
+        </double>
+        <double>
+            <name>beta</name>
+            <label>beta</label>
+            <flag>b</flag>
+            <longflag>beta</longflag>
+            <default>0.5</default>
+            <constraints>
+                <minimum>0</minimum>
+                <maximum>1</maximum>
+                <step>0.01</step>
+            </constraints>
+        </double>
+        <integer>
+            <name>gamma</name>
+            <label>gamma</label>
+            <flag>g</flag>
+            <longflag>gamma</longflag>
+            <default>0.5</default>
+            <constraints>
+                <minimum>0</minimum>
+                <maximum>255</maximum>
+                <step>1</step>
+            </constraints>
+        </integer>
+    </parameters>
+
+    <parameters>
+        <label>IO</label>
+        <description>Input/output images</description>
+        <image>
+            <name>inputVolume</name>
+            <label>Input Volume</label>
+            <channel>input</channel>
+            <flag>i</flag>
+            <longflag>inputVolume</longflag>
+            <description>Input volume to be filtered</description>
+        </image>
+        <label>IO</label>
+        <description>Input/output images</description>
+        <image>
+            <name>maskVolume</name>
+            <label>mask volume</label>
+            <channel>input</channel>
+            <flag>k</flag>
+            <longflag>maskVolume</longflag>
+            <description>mask to be applied on the vesselness</description>
+        </image>
+        <image>
+            <name>outputVolume</name>
+            <label>Output Volume</label>
+            <channel>output</channel>
+            <flag>o</flag>
+            <longflag>outputVolume</longflag>
+            <description>Output filtered</description>
+        </image>
+    </parameters>
+</executable>
