@@ -22,4 +22,4 @@ This repository provides 6 vesselness :
 - Jerman
 - Zhang
 
-[https://github.com/JonasLamy/LiverVesselness](https://github.com/JonasLamy/LiverVesselness)
+The original implementation comes from : [https://github.com/JonasLamy/LiverVesselness](https://github.com/JonasLamy/LiverVesselness)
