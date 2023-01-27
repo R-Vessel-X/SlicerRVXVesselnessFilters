@@ -22,7 +22,7 @@ include(${Slicer_USE_FILE})
 add_subdirectory(FrangiVesselness)
 add_subdirectory(JermanVesselness)
 add_subdirectory(MeijeringVesselness)
-#add_subdirectory(OOFVesselness)
+add_subdirectory(OOFVesselness)
 add_subdirectory(SatoVesselness)
 add_subdirectory(ZhangVesselness)
 ## NEXT_MODULE
