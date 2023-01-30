@@ -2,7 +2,7 @@ cmake_minimum_required(VERSION 3.9.5)
 
 project(OOFGM)
 
-set(CMAKE_CXX_STANDARD 11)
+set(CMAKE_CXX_STANDARD 17)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
 
 find_package(ITK 5.2 REQUIRED)
