@@ -1,4 +1,4 @@
-# RVesselX Slicer Vesselness Fitlers plugin
+# RVesselX Slicer Vesselness Filters plugin
 
 <div style="text-align:center">
 <img class="center" src="https://github.com/R-Vessel-X/SlicerRVXVesselnessFilters/raw/main/Screenshots/RVX_vesselness_example.png"/>
@@ -21,8 +21,7 @@ here : https://hal.science/hal-02544493/document
 * [Using the Plugin](#Using-the-Plugin)
     * [Installing the plugin](#Installing-the-plugin)
     * [Plugin Overview](#Plugin-Overview)
-* [Developers](#Developers)
-    * [Contributing](#Contributing)
+* [Contributing](#Contributing)
 
 ## Introduction
 
