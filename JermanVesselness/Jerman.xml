@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <executable>
-    <category>Vesselness</category>
+    <category>Filtering.Vesselness</category>
     <title>Jerman Vesselness Filter</title>
     <description>
         Jerman Vesselness filter, designed to improve results over frangi with less parameters.
