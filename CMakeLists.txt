@@ -5,11 +5,11 @@ project(RVesselXCLI)
 #-----------------------------------------------------------------------------
 # Extension meta-information
 set(EXTENSION_HOMEPAGE "https://github.com/JonasLamy/Slicer3DVesselness")
-set(EXTENSION_CATEGORY "RVesselX")
+set(EXTENSION_CATEGORY "Filtering.Vesselness")
 set(EXTENSION_CONTRIBUTORS "Jonas Lamy")
-set(EXTENSION_DESCRIPTION "Extension for custom vesselness segmentation")
-set(EXTENSION_ICONURL "https://github.com/R-Vessel-X/SlicerRVXLiverSegmentation/raw/main/RVXLiverSegmentation/Resources/Icons/RVXLiverSegmentation.png")
-set(EXTENSION_SCREENSHOTURLS "https://github.com/R-Vessel-X/SlicerRVXLiverSegmentation/raw/main/Screenshots/1.png")
+set(EXTENSION_DESCRIPTION "Hessian Vesselness Filters extension")
+set(EXTENSION_ICONURL "https://github.com/R-Vessel-X/SlicerRVXVesselnessFilters/raw/main/Screenshots/RVXLogo.png")
+set(EXTENSION_SCREENSHOTURLS "https://github.com/R-Vessel-X/SlicerRVXVesselnessFilters/raw/main/Screenshots/RVX_vesselness_example.png")
 set(EXTENSION_DEPENDS "NA") # Specified as a list or "NA" if no dependencies
 
 #-----------------------------------------------------------------------------
