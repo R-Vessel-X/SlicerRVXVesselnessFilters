@@ -1,6 +1,9 @@
 #ifndef _itkOptimallyOrientedFlux_GM_h_
 #define _itkOptimallyOrientedFlux_GM_h_
 
+#define _USE_MATH_DEFINES
+#include <cmath>
+
 #include "itkImageToImageFilter.h"
 #include "itkForwardFFTImageFilter.h"
 #include "itkFFTShiftImageFilter.h"
@@ -10,9 +13,6 @@
 #include "itkMultiplyImageFilter.h"
 #include "itkInverseFFTImageFilter.h"
 #include "itkSymmetricSecondRankTensor.h"
-
-
-#include "boost/math/special_functions/bessel.hpp"
 
 #include <vector>
 
