@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <executable>
-    <category>Vesselness</category>
+    <category>Filtering.Vesselness</category>
     <title>Sato Vesselness Filter</title>
     <description>
         Optimally oriented flux Vesselness filter, used with geometric mean.

@@ -246,7 +246,7 @@ void itk::OptimallyOrientedFlux_GM<TInputImage,TOutputImage>::GenerateData()
     typename ImageType::Pointer input = ImageType::New();
     input->Graft(const_cast<ImageType *>(this->GetInput()));
 
-   using FFTType = typename itk::FFTWForwardFFTImageFilter<TInputImage>;
+   using FFTType = typename itk::ForwardFFTImageFilter<TInputImage>;
     auto FFTfilter = FFTType::New();
     FFTfilter->SetInput(input);
 
@@ -300,7 +300,7 @@ void itk::OptimallyOrientedFlux_GM<TInputImage,TOutputImage>::GenerateData()
         std::cout<<"radius:"<<rad<<std::endl;
 
         /* TODO: find out why 1e-12^(3/2) needs to be turned into 1e12^(3/2) to match Matlab implementation */ 
-        normalization = 4.0/3.0*M_PI*(rad*rad*rad)/boost::math::cyl_bessel_j<double,double>(1.5,2*M_PI*rad*1e-12)/std::pow(1e12,1.5)
+        normalization = 4.0/3.0*M_PI*(rad*rad*rad)/std::cyl_bessel_j(1.5,2*M_PI*rad*1e-12)/std::pow(1e12,1.5)
         / (rad*rad) * ( std::pow(rad / sqrt( 2*rad*m_sigma - m_sigma*m_sigma ),m_normalizationType ) );
 
         auto BesselJBuffer = BesselBufferImageType::New();

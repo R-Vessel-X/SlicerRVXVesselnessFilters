@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <executable>
-    <category>Vesselness</category>
+    <category>Filtering.Vesselness</category>
     <title>Meijering Vesselness Filter</title>
     <description>
         Meijering Vesselness filter, designed to improve results over thin vessels.
