@@ -5,7 +5,7 @@
 #include "itkCastImageFilter.h"
 #include "itkStatisticsImageFilter.h"
 
-#include "JermanCLP.h"
+#include "JermanVesselnessCLP.h"
 
 #include <string>
 

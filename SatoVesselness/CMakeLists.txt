@@ -1,6 +1,6 @@
 cmake_minimum_required(VERSION 3.9.5)
 
-project(Sato)
+project(SatoVesselness)
 
 set(CMAKE_CXX_STANDARD 11)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
@@ -24,7 +24,7 @@ include(${SlicerExecutionModel_USE_FILE})
 # Slicer macro
 
 SEMMacroBuildCLI(
-   NAME Sato
+   NAME SatoVesselness
    TARGET_LIBRARIES ${ITK_LIBRARIES}
    INCLUDE_DIRECTORIES ${MODULE_INCLUDE_DIRECTORIES}
    )
