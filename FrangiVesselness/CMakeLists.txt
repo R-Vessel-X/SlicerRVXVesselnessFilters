@@ -10,8 +10,7 @@ include(${ITK_USE_FILE})
 
 set(CMAKE_BUILD_TYPE Release)
 
-
-# CLI11
+# CLI 11
 set(MODULE_INCLUDE_DIRECTORIES
    "${PROJECT_SOURCE_DIR}/include"
   )

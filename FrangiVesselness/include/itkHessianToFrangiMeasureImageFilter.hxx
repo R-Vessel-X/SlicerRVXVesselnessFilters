@@ -5,13 +5,18 @@
 #include "itkStatisticsImageFilter.h"
 
 namespace itk{
+    /** 
+     * Constructor with message alerting on the filter used.
+     * **/
     template< typename TInputImage,typename TOutputImage, typename TMaskImage>
     HessianToFrangiMeasureImageFilter<TInputImage, TOutputImage,TMaskImage>::HessianToFrangiMeasureImageFilter()
     {
         //this->DynamicMultiThreadingOn();
         std::cout<<"Using Hessian Frangi Image Filter"<<std::endl;
     }
-
+    /**
+     * Plugging internal data pointers to the filter interfaces
+    */
     template<typename TInputImage,typename TOutputImage, typename TMaskImage>
     void HessianToFrangiMeasureImageFilter<TInputImage, TOutputImage,TMaskImage>::DynamicThreadedGenerateData(const OutputImageRegionType & outputRegionForThread)
     {
@@ -19,7 +24,11 @@ namespace itk{
         const InputImageType* input = this->GetInput();
 
     }
-
+    /**
+     * Single thread worker function
+     * Call the function where the vesselness is computed. If a mask has been added, the computation of the vesselness is done only inside the mask.
+     * 
+    */
     template<typename TInputImage,typename TOutputImage, typename TMaskImage>
     void HessianToFrangiMeasureImageFilter<TInputImage, TOutputImage,TMaskImage>::GenerateData()
     {   
@@ -28,7 +37,10 @@ namespace itk{
         else
             noMask();
     }
-
+    /** 
+     * Threaded function overloading, however it is not used in practise.
+     * While the eigen values are computed in a threaded fashion, the vesselness is not
+    */
     template<typename TInputImage,typename TOutputImage, typename TMaskImage>
     void HessianToFrangiMeasureImageFilter<TInputImage, TOutputImage,TMaskImage>::BeforeThreadedGenerateData()
     {   
@@ -37,7 +49,9 @@ namespace itk{
         else
             noMask();
     }
-    
+    /**
+     * This function computes the Frangi vesselness inside the input mask. It speeds up the computation while avoiding borders effects of masking prior the vesselness filter.
+    */
     template<typename TInputImage,typename TOutputImage, typename TMaskImage>
     void HessianToFrangiMeasureImageFilter<TInputImage, TOutputImage,TMaskImage>
     ::withMask()
@@ -79,8 +93,6 @@ namespace itk{
         ImageRegionConstIterator< Image<EigenValueArrayType,3> > itEV(eigenValuesImage, eigenValuesImage->GetLargestPossibleRegion());
         ImageRegionConstIterator< MaskImageType > itMask(this->m_maskImage, this->m_maskImage->GetLargestPossibleRegion() );
         ImageRegionIterator< OutputImageType >     oit(output, output->GetLargestPossibleRegion());
-
-
 
         oit.GoToBegin();
         itEV.GoToBegin();
@@ -144,7 +156,9 @@ namespace itk{
         <<"mean:"<<stats->GetMean()<<std::endl
         <<"max:"<<stats->GetMaximum()<<std::endl;
     }
-
+    /**
+     * This function computes the Frangi vesselness in the whole image.
+    */
     template<typename TInputImage,typename TOutputImage, typename TMaskImage>
     void HessianToFrangiMeasureImageFilter<TInputImage, TOutputImage,TMaskImage>
     ::noMask()
@@ -230,7 +244,9 @@ namespace itk{
         <<"mean:"<<stats->GetMean()<<std::endl
         <<"max:"<<stats->GetMaximum()<<std::endl;
     }
-
+    /**
+     * Print the filters current parameters.
+    */
     template<typename TInputImage,typename TOutputImage, typename TMaskImage>
     void HessianToFrangiMeasureImageFilter<TInputImage, TOutputImage,TMaskImage>
     ::PrintSelf(std::ostream & os, Indent indent) const
