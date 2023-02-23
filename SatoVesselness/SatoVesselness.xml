@@ -39,7 +39,7 @@
             <longflag>sigmaMax</longflag>
             <description>maximum sigma</description>
             <label>maximum sigma</label>
-            <default>1</default>
+            <default>3</default>
             <constraints>
                 <minimum>0</minimum>
                 <maximum>50</maximum>
@@ -53,7 +53,7 @@
             <longflag>nbSteps</longflag>
             <description>Number of scales between [sigmaMin,sigmaMax]</description>
             <label>Scales</label>
-            <default>4</default>
+            <default>3</default>
             <constraints>
                 <minimum>2</minimum>
                 <maximum>30</maximum>
@@ -84,7 +84,7 @@
             <label>alpha2</label>
             <flag>b</flag>
             <longflag>alpha2</longflag>
-            <default>0.5</default>
+            <default>2</default>
             <constraints>
                 <minimum>0</minimum>
                 <maximum>5</maximum>
