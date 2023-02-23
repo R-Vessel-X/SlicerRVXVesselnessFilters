@@ -9,11 +9,6 @@ find_package(ITK 5.2 REQUIRED)
 include(${ITK_USE_FILE})
 
 
-# CLI11
-set(MODULE_INCLUDE_DIRECTORIES
-  "${PROJECT_SOURCE_DIR}/include"
-  )
-
 # GenerateCLP
 find_package(SlicerExecutionModel REQUIRED)
 include(${SlicerExecutionModel_USE_FILE})
