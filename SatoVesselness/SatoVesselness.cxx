@@ -9,7 +9,7 @@
 
 #include <string>
 
-#include "SatoCLP.h"
+#include "SatoVesselnessCLP.h"
 
 namespace {
 template<class T>

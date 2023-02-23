@@ -1,17 +1,13 @@
 #include "itkImageFileReader.h"
 #include "itkImageFileWriter.h"
-// Itk's frangi vesselness from Antiga implementation
-#include "itkHessianToObjectnessMeasureImageFilter.h"
-// Our own
-//#include "itkHessianToFrangiMeasureImageFilter.h"
-
 #include "itkMultiScaleHessianBasedMeasureImageFilter.h"
-#include "itkRescaleIntensityImageFilter.h"
-#include "itkMaskImageFilter.h"
+#include "itkHessianToMeijeringMeasureImageFilter.h"
+#include "itkStatisticsImageFilter.h"
 #include "itkCastImageFilter.h"
+#include "itkRescaleIntensityImageFilter.h"
+#include <string>
 
-
-#include "AntigaCLP.h"
+#include "MeijeringVesselnessCLP.h"
 
 namespace {
 template<class T>
@@ -19,7 +15,6 @@ int DoIt(int argc, char *argv[]) {
         PARSE_ARGS;
   
   constexpr unsigned int Dimension = 3;
-  using PixelType = T;
   using InputImageType = itk::Image<T, Dimension>;
   using ImageType = itk::Image<double, Dimension>;
   using OutputImageType = itk::Image<double, Dimension>;
@@ -38,64 +33,57 @@ int DoIt(int argc, char *argv[]) {
 
   auto image = cast->GetOutput();
   MaskImageType::Pointer maskImage;
-  // Antiga vesselness operator
+
+  using HessianPixelType = itk::SymmetricSecondRankTensor<double, Dimension>;
+  using HessianImageType = itk::Image<HessianPixelType, Dimension>;
   
-  using HessianPixelType = itk::SymmetricSecondRankTensor< double, Dimension >;
-  using HessianImageType = itk::Image< HessianPixelType, Dimension >;
-  using ObjectnessFilterType = itk::HessianToObjectnessMeasureImageFilter< HessianImageType, ImageType >;
-  //using ObjectnessFilterType = itk::HessianToFrangiMeasureImageFilter<HessianImageType, ImageType>;//
+  using MeijeringFilterType = itk::HessianToMeijeringMeasureImageFilter<HessianImageType, OutputImageType,MaskImageType>;
+  auto meijeringFilter = MeijeringFilterType::New();
+  meijeringFilter->SetAlpha(Alpha);
   
-  ObjectnessFilterType::Pointer objectnessFilter = ObjectnessFilterType::New();
-  objectnessFilter->SetBrightObject( true );
-  objectnessFilter->SetScaleObjectnessMeasure( false );
-  objectnessFilter->SetAlpha( alpha );
-  objectnessFilter->SetBeta( beta );
-  objectnessFilter->SetGamma( gamma );
+  if (!maskVolume.empty()) {
+        auto maskReader = MaskReaderType::New();
+        maskReader->SetFileName(maskVolume);
+    maskReader->Update();
+        meijeringFilter->SetMaskImage(maskReader->GetOutput());
+  }
   
-  using MultiScaleEnhancementFilterType = itk::MultiScaleHessianBasedMeasureImageFilter< ImageType, HessianImageType, ImageType >;
+  using MultiScaleEnhancementFilterType = itk::MultiScaleHessianBasedMeasureImageFilter< ImageType, HessianImageType, OutputImageType >;
   MultiScaleEnhancementFilterType::Pointer multiScaleEnhancementFilter =  MultiScaleEnhancementFilterType::New();
   multiScaleEnhancementFilter->SetInput( image );
-  multiScaleEnhancementFilter->SetHessianToMeasureFilter( objectnessFilter );
+  multiScaleEnhancementFilter->SetHessianToMeasureFilter( meijeringFilter );
   multiScaleEnhancementFilter->SetSigmaStepMethodToLogarithmic();
   multiScaleEnhancementFilter->SetSigmaMinimum( sigmaMin );
   multiScaleEnhancementFilter->SetSigmaMaximum( sigmaMax );
   multiScaleEnhancementFilter->SetNumberOfSigmaSteps( numberOfScales );
   
-  // For antiga, no global parameters (like jerman's lambda_max)
-  // we still have to mask the filter's response though
+  auto stats = itk::StatisticsImageFilter<OutputImageType>::New();
+  stats->SetInput(multiScaleEnhancementFilter->GetOutput());
+  stats->Update();
   
-  using imageWriterType = ImageType;
+  std::cout<<"multiscale"<<std::endl<<"min"
+  <<stats->GetMinimum()<<std::endl
+  <<"mean:"<<stats->GetMean()<<std::endl
+  <<"max:"<<stats->GetMaximum()<<std::endl;
+
+  using RescaleFilterType = itk::RescaleIntensityImageFilter< ImageType, ImageType >;
+  RescaleFilterType::Pointer rescaleFilter = RescaleFilterType::New();
+  
+ 
+  rescaleFilter->SetInput(multiScaleEnhancementFilter->GetOutput());
+  rescaleFilter->SetOutputMinimum(0.0f);
+  rescaleFilter->SetOutputMaximum(1.0f);
+  
+  using imageWriterType = OutputImageType;
   typedef  itk::ImageFileWriter< imageWriterType  > WriterType;
-  typename WriterType::Pointer writer = WriterType::New();
+  WriterType::Pointer writer = WriterType::New();
+  writer->SetInput( rescaleFilter->GetOutput() );
   writer->SetFileName( outputVolume );
-  
-  typedef itk::Image<uint8_t, Dimension> MaskImageType;
-  if( !maskVolume.empty() )
-  {
-    auto maskReader = MaskReaderType::New();
-    maskReader->SetFileName(maskVolume);
-    maskReader->Update();
-    
-    auto maskFilter = itk::MaskImageFilter<ImageType,MaskImageType>::New();
-    maskFilter->SetInput( multiScaleEnhancementFilter->GetOutput() );
-    maskFilter->SetMaskImage( maskReader->GetOutput() );
-    maskFilter->SetMaskingValue(0);
-    maskFilter->SetOutsideValue(0);
-    
-    maskFilter->Update();
-    
-    writer->SetInput( maskFilter->GetOutput() );
-  }
-  else
-  {
-    writer->SetInput( multiScaleEnhancementFilter->GetOutput() );
-  }
-  
   writer->Update();
   
+  
   return EXIT_SUCCESS;
-}
-
+  }
 
     /// Get the PixelType and ComponentType from fileName
   /// Copied from https://github.com/Slicer/Slicer/blob/master/Base/CLI/itkPluginUtilities.h

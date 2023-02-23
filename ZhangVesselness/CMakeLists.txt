@@ -1,6 +1,6 @@
 cmake_minimum_required(VERSION 3.9.5)
 
-project(Zhang)
+project(ZhangVesselness)
 
 set(CMAKE_CXX_STANDARD 11)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
@@ -8,12 +8,10 @@ set(CMAKE_CXX_STANDARD_REQUIRED ON)
 find_package(ITK 5.2 REQUIRED)
 include(${ITK_USE_FILE})
 
-set(CMAKE_BUILD_TYPE Release)
-
 
 # CLI11
 set(MODULE_INCLUDE_DIRECTORIES
-   "${PROJECT_SOURCE_DIR}/include"
+  "${PROJECT_SOURCE_DIR}/include"
   )
 
 # GenerateCLP
@@ -24,9 +22,9 @@ include(${SlicerExecutionModel_USE_FILE})
 # Slicer macro
 
 SEMMacroBuildCLI(
-   NAME Zhang
-   TARGET_LIBRARIES ${ITK_LIBRARIES}
-   INCLUDE_DIRECTORIES ${MODULE_INCLUDE_DIRECTORIES}
-   )
+  NAME ZhangVesselness
+  TARGET_LIBRARIES ${ITK_LIBRARIES}
+  INCLUDE_DIRECTORIES ${MODULE_INCLUDE_DIRECTORIES}
+)
 
 

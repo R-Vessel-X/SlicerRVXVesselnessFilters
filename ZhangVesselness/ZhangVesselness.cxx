@@ -22,7 +22,7 @@
 #include <string>
 #include "itkTimeProbe.h"
 
-#include "ZhangCLP.h"
+#include "ZhangVesselnessCLP.h"
 
 namespace {
 template<class T>
