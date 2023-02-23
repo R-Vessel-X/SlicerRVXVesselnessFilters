@@ -1,6 +1,6 @@
 cmake_minimum_required(VERSION 3.9.5)
 
-project(Jerman)
+project(JermanVesselness)
 
 set(CMAKE_CXX_STANDARD 11)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
@@ -24,7 +24,7 @@ include(${SlicerExecutionModel_USE_FILE})
 # Slicer macro
 
 SEMMacroBuildCLI(
-   NAME Jerman
+   NAME JermanVesselness
    TARGET_LIBRARIES ${ITK_LIBRARIES}
    INCLUDE_DIRECTORIES ${MODULE_INCLUDE_DIRECTORIES}
    )

@@ -13,7 +13,7 @@ Based on work of Turetken & Fethallah Benmansour
 #include "itkMaskImageFilter.h"
 #include "itkCastImageFilter.h"
 
-#include "OOFGMCLP.h"
+#include "OOFVesselnessCLP.h"
 
 namespace {
   template<class T>

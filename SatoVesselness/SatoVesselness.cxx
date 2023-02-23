@@ -1,13 +1,15 @@
 #include "itkImageFileReader.h"
 #include "itkImageFileWriter.h"
+#include "itkHessian3DToVesselnessMeasureImageFilter.h"
 #include "itkMultiScaleHessianBasedMeasureImageFilter.h"
-#include "itkHessianToMeijeringMeasureImageFilter.h"
-#include "itkStatisticsImageFilter.h"
-#include "itkCastImageFilter.h"
 #include "itkRescaleIntensityImageFilter.h"
+#include "itkMaskImageFilter.h"
+#include <itkRescaleIntensityImageFilter.h>
+#include "itkCastImageFilter.h"
+
 #include <string>
 
-#include "MeijeringCLP.h"
+#include "SatoVesselnessCLP.h"
 
 namespace {
 template<class T>
@@ -15,6 +17,7 @@ int DoIt(int argc, char *argv[]) {
         PARSE_ARGS;
   
   constexpr unsigned int Dimension = 3;
+  using PixelType = T;
   using InputImageType = itk::Image<T, Dimension>;
   using ImageType = itk::Image<double, Dimension>;
   using OutputImageType = itk::Image<double, Dimension>;
@@ -33,57 +36,66 @@ int DoIt(int argc, char *argv[]) {
 
   auto image = cast->GetOutput();
   MaskImageType::Pointer maskImage;
-
-  using HessianPixelType = itk::SymmetricSecondRankTensor<double, Dimension>;
-  using HessianImageType = itk::Image<HessianPixelType, Dimension>;
   
-  using MeijeringFilterType = itk::HessianToMeijeringMeasureImageFilter<HessianImageType, OutputImageType,MaskImageType>;
-  auto meijeringFilter = MeijeringFilterType::New();
-  meijeringFilter->SetAlpha(Alpha);
+  // Sato vesselness operator
   
-  if (!maskVolume.empty()) {
-        auto maskReader = MaskReaderType::New();
-        maskReader->SetFileName(maskVolume);
-    maskReader->Update();
-        meijeringFilter->SetMaskImage(maskReader->GetOutput());
-  }
+  using HessianPixelType = itk::SymmetricSecondRankTensor< double, Dimension >;
+  using HessianImageType = itk::Image< HessianPixelType, Dimension >;
+  using ObjectnessFilterType = itk::Hessian3DToVesselnessMeasureImageFilter<double>;
   
-  using MultiScaleEnhancementFilterType = itk::MultiScaleHessianBasedMeasureImageFilter< ImageType, HessianImageType, OutputImageType >;
+  
+  typename ObjectnessFilterType::Pointer objectnessFilter = ObjectnessFilterType::New();
+  objectnessFilter->SetAlpha1( alpha1 );
+  objectnessFilter->SetAlpha2( alpha2 );
+  
+  using MultiScaleEnhancementFilterType = itk::MultiScaleHessianBasedMeasureImageFilter< ImageType, HessianImageType, ImageType >;
   MultiScaleEnhancementFilterType::Pointer multiScaleEnhancementFilter =  MultiScaleEnhancementFilterType::New();
   multiScaleEnhancementFilter->SetInput( image );
-  multiScaleEnhancementFilter->SetHessianToMeasureFilter( meijeringFilter );
+  multiScaleEnhancementFilter->SetNonNegativeHessianBasedMeasure(true);
+  multiScaleEnhancementFilter->SetHessianToMeasureFilter( objectnessFilter );
   multiScaleEnhancementFilter->SetSigmaStepMethodToLogarithmic();
   multiScaleEnhancementFilter->SetSigmaMinimum( sigmaMin );
   multiScaleEnhancementFilter->SetSigmaMaximum( sigmaMax );
   multiScaleEnhancementFilter->SetNumberOfSigmaSteps( numberOfScales );
   
-  auto stats = itk::StatisticsImageFilter<OutputImageType>::New();
-  stats->SetInput(multiScaleEnhancementFilter->GetOutput());
-  stats->Update();
-  
-  std::cout<<"multiscale"<<std::endl<<"min"
-  <<stats->GetMinimum()<<std::endl
-  <<"mean:"<<stats->GetMean()<<std::endl
-  <<"max:"<<stats->GetMaximum()<<std::endl;
-
+  // end Antiga vesselness operator
   using RescaleFilterType = itk::RescaleIntensityImageFilter< ImageType, ImageType >;
   RescaleFilterType::Pointer rescaleFilter = RescaleFilterType::New();
+
+  if( !maskVolume.empty() )
+  {
+    auto maskReader = MaskReaderType::New();
+    maskReader->SetFileName(maskVolume);
+    maskReader->Update();
+    
+    auto maskFilter = itk::MaskImageFilter<ImageType,MaskImageType>::New();
+    maskFilter->SetInput( multiScaleEnhancementFilter->GetOutput() );
+    maskFilter->SetMaskImage( maskReader->GetOutput() );
+    maskFilter->SetMaskingValue(0);
+    maskFilter->SetOutsideValue(0);
+    
+    maskFilter->Update();
+    rescaleFilter->SetInput( maskFilter->GetOutput() );
+  }
+  else{
+    rescaleFilter->SetInput(multiScaleEnhancementFilter->GetOutput());
+  }
   
- 
-  rescaleFilter->SetInput(multiScaleEnhancementFilter->GetOutput());
+  using OutputImageType = ImageType;
   rescaleFilter->SetOutputMinimum(0.0f);
   rescaleFilter->SetOutputMaximum(1.0f);
   
   using imageWriterType = OutputImageType;
   typedef  itk::ImageFileWriter< imageWriterType  > WriterType;
-  WriterType::Pointer writer = WriterType::New();
+  typename WriterType::Pointer writer = WriterType::New();
   writer->SetInput( rescaleFilter->GetOutput() );
   writer->SetFileName( outputVolume );
   writer->Update();
   
   
   return EXIT_SUCCESS;
-  }
+ }
+
 
     /// Get the PixelType and ComponentType from fileName
   /// Copied from https://github.com/Slicer/Slicer/blob/master/Base/CLI/itkPluginUtilities.h
