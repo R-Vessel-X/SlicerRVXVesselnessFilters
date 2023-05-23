@@ -6,8 +6,9 @@
 
 This repository contains several vesselness filters tested in the context of liver vessel segmentation.
 
-The original implementation comes
-from : [https://github.com/JonasLamy/LiverVesselness](https://github.com/JonasLamy/LiverVesselness)
+The original implementations come from : 
+* [https://github.com/JonasLamy/LiverVesselness](https://github.com/JonasLamy/LiverVesselness)
+* [https://github.com/path-openings/RORPO](https://github.com/path-openings/RORPO)
 
 An installation-free online demonstration is also available
 here: http://ipol-geometry.loria.fr/~kerautre/ipol_demo/LiverVesselnessIPOLDemo
