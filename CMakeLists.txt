@@ -6,7 +6,7 @@ project(RVXVesselnessFilters)
 # Extension meta-information
 set(EXTENSION_HOMEPAGE "https://github.com/R-Vessel-X/SlicerRVXVesselnessFilters")
 set(EXTENSION_CATEGORY "Filtering.Vesselness")
-set(EXTENSION_CONTRIBUTORS "Jonas Lamy, Odyssée Merveille, Bertrand Kerautret, Thibault Pelletier (Kitware SAS), Laurenn Lam (Kitware SAS)")
+set(EXTENSION_CONTRIBUTORS "Jonas Lamy (LYRIS), Odyssée Merveille (CREATIS), Bertrand Kerautret (LIRIS), Nicolas Passat (CRESTIC), Thibault Pelletier (Kitware SAS), Laurenn Lam (Kitware SAS)")
 set(EXTENSION_DESCRIPTION "Hessian Vesselness Filters extension")
 set(EXTENSION_ICONURL "https://github.com/R-Vessel-X/SlicerRVXVesselnessFilters/raw/main/Screenshots/RVXLogo.png")
 set(EXTENSION_SCREENSHOTURLS "https://github.com/R-Vessel-X/SlicerRVXVesselnessFilters/raw/main/Screenshots/RVX_vesselness_example.png")
