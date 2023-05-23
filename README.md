@@ -22,6 +22,7 @@ here : https://hal.science/hal-02544493/document
 * [How to cite](#How-to-cite)
 * [Using the Plugin](#Using-the-Plugin)
     * [Installing the plugin](#Installing-the-plugin)
+    * [Tutorials](#Tutorials)
     * [Plugin Overview](#Plugin-Overview)
 * [Contributing](#Contributing)
 
@@ -62,6 +63,19 @@ It can be found using the search bar by typing "RVesselX".
 
 After the installation is complete, the different filters will be available from the search bar by typing in their
 names or by navigating to the `Filtering > Vesselness` category.
+
+### Tutorials
+
+1. In the `Sample Data` module, load the `CTLiver` volume
+2. Switch to the `Frangi Vesselness Filter` module located in `Filtering > Vesselness`
+2. In the IO section, select the `CTLiver` in the `Input Volume` drop down menu
+3. In the IO section, select `Create New Volume` in the `Output Volume` drop down menu
+4. Click On the `Apply` button
+5. After processing the following volume will be displayed in the UI
+
+<div style="text-align:center">
+<img class="center" src="https://github.com/R-Vessel-X/SlicerRVXVesselnessFilters/raw/main/Screenshots/RVX_vesselness_tutorial_01.png"/>
+</div>
 
 ### Plugin Overview
 
