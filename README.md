@@ -6,8 +6,9 @@
 
 This repository contains several vesselness filters tested in the context of liver vessel segmentation.
 
-The original implementation comes
-from : [https://github.com/JonasLamy/LiverVesselness](https://github.com/JonasLamy/LiverVesselness)
+The original implementations come from : 
+* [https://github.com/JonasLamy/LiverVesselness](https://github.com/JonasLamy/LiverVesselness)
+* [https://github.com/path-openings/RORPO](https://github.com/path-openings/RORPO)
 
 An installation-free online demonstration is also available
 here: http://ipol-geometry.loria.fr/~kerautre/ipol_demo/LiverVesselnessIPOLDemo
@@ -18,6 +19,7 @@ here : https://hal.science/hal-02544493/document
 ## Table of contents
 
 * [Introduction](#Introduction)
+* [How to cite](#How-to-cite)
 * [Using the Plugin](#Using-the-Plugin)
     * [Installing the plugin](#Installing-the-plugin)
     * [Plugin Overview](#Plugin-Overview)
@@ -34,6 +36,21 @@ The filters take as input a volume and generate a new volume with the processed 
 
 For more information on the R-Vessel-X project, please visit :  
 https://anr.fr/Projet-ANR-18-CE45-0018
+
+## How to cite
+
+Please cite the reference of this work if you use any of it :
+```
+@ARTICLE{9833530,
+  author={Lamy, Jonas and Merveille, Odyssée and Kerautret, Bertrand and Passat, Nicolas},
+  journal={IEEE Transactions on Medical Imaging}, 
+  title={A Benchmark Framework for Multiregion Analysis of Vesselness Filters}, 
+  year={2022},
+  volume={41},
+  number={12},
+  pages={3649-3662},
+  doi={10.1109/TMI.2022.3192679}}
+```
 
 ## Using the Plugin
 
