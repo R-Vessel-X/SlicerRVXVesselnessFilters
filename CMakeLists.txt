@@ -25,6 +25,7 @@ add_subdirectory(MeijeringVesselness)
 add_subdirectory(OOFVesselness)
 add_subdirectory(SatoVesselness)
 add_subdirectory(ZhangVesselness)
+add_subdirectory(RORPOVesselness)
 ## NEXT_MODULE
 
 #-----------------------------------------------------------------------------

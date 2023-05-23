@@ -29,8 +29,7 @@ here : https://hal.science/hal-02544493/document
 <img class="center" src="https://github.com/R-Vessel-X/SlicerRVXVesselnessFilters/raw/main/Screenshots/RVXLogo.png"/>
 </div>
 
-The RVesselX slicer vesselness plugin is an extension providing several vesselness filters as command line interface
-extensions.
+The RVesselX slicer vesselness plugin is an extension providing several vesselness filters as command line interface extensions.
 The filters take as input a volume and generate a new volume with the processed vesselness.
 
 For more information on the R-Vessel-X project, please visit :  
@@ -49,7 +48,7 @@ names or by navigating to the `Filtering > Vesselness` category.
 
 ### Plugin Overview
 
-This repository provides the following, hessian-based, vesselness filters implementations :
+This repository provides the following, hessian-based and morphological vesselness filters implementations :
 
 - Antiga Vesselness Filter : A. F. Frangi, W. J. Niessen, K. L. Vincken, and M. A. Viergever, “Multiscale vessel
   enhancement filtering,” in MICCAI, 1998, pp. 130–137.
@@ -65,18 +64,32 @@ This repository provides the following, hessian-based, vesselness filters implem
   CVRMed-MRCAS, 1997, pp. 213–222.
 - Zhang Vesselness Filter : D. Li, L. Zhang, C. Sun, T. Yin, C. Liu, and J. Yang, “Robust retinal image enhancement via
   dual-tree complex wavelet transform and morphology-based method,” IEEE Access, vol. 7, pp. 47 303–47 316, 2019.
+- RORPO Vesselness Filter : O. M ERVEILLE , H. T ALBOT , L. N AJMAN et N. P ASSAT . “Curvilinear structure analysis by
+ranking the orientation responses of path operators”. In : IEEE Transactions in Pattern
+Analysis 40 (2018), p. 304-317 (cf. p. 57, 68)
 
 #### Common parameters
 
-These filters share their Hessian configuration as well as their Input/Output definition.
+Hessian filters share a common configuration as well as their Input/Output definition.
+RORPO has a different configuration, however it shares Input/Output definition with hessian based filters.
 
 ##### Scale space parameters
 
 The scale space parameters define the parameters for the Hessian matrix processing.
 They influence the min / max scale of the vessels which will be detected in the input volumes.
 
-* min / max Sigma : Sets the Hessian gaussian filter min / max size in mm.
+* min / max Sigma : Sets the Hessian gaussian filter min / max size in voxels (multiply by the image resolution to get the size in mm).
 * Scales : Number of scales between mininum sigma and max sigma (higher number involves longer processing time)
+
+RORPO's algorithm is parametrised only by scales parameters.
+They define the size of the morphological paths corresponding to the min size of the vessels which will be detected in the input volume.
+
+* min Scale : Set the size of the first path
+* Factor : Growth factor of the path for the next scale
+* Scales : Number of scales tested by the algorithm.
+* Dilation : make the algorithm more robust to noise. This parameter is embeded into the scale computation. 
+
+* (optionnal) core : Number of CPU core (max 7), used by RORPO. Single core processing is slow.
 
 ##### IO
 

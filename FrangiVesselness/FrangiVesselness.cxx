@@ -1,6 +1,10 @@
 #include "itkImageFileReader.h"
 #include "itkImageFileWriter.h"
+// Itk's frangi vesselness from Antiga implementation
 #include "itkHessianToObjectnessMeasureImageFilter.h"
+// Our own
+//#include "itkHessianToFrangiMeasureImageFilter.h"
+
 #include "itkMultiScaleHessianBasedMeasureImageFilter.h"
 #include "itkRescaleIntensityImageFilter.h"
 #include "itkMaskImageFilter.h"
@@ -39,6 +43,7 @@ int DoIt(int argc, char *argv[]) {
   using HessianPixelType = itk::SymmetricSecondRankTensor< double, Dimension >;
   using HessianImageType = itk::Image< HessianPixelType, Dimension >;
   using ObjectnessFilterType = itk::HessianToObjectnessMeasureImageFilter< HessianImageType, ImageType >;
+  //using ObjectnessFilterType = itk::HessianToFrangiMeasureImageFilter<HessianImageType, ImageType>;//
   
   ObjectnessFilterType::Pointer objectnessFilter = ObjectnessFilterType::New();
   objectnessFilter->SetBrightObject( true );

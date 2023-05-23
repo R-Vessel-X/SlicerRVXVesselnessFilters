@@ -8,8 +8,6 @@ set(CMAKE_CXX_STANDARD_REQUIRED ON)
 find_package(ITK 5.2 REQUIRED)
 include(${ITK_USE_FILE})
 
-
-# CLI11
 set(MODULE_INCLUDE_DIRECTORIES
   "${PROJECT_SOURCE_DIR}/include"
   )
@@ -17,7 +15,6 @@ set(MODULE_INCLUDE_DIRECTORIES
 # GenerateCLP
 find_package(SlicerExecutionModel REQUIRED)
 include(${SlicerExecutionModel_USE_FILE})
-
 
 # Slicer macro
 
