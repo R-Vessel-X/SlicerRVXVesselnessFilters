@@ -55,8 +55,8 @@ if (UNIX)
   endif ()
   
   # Build RORPO with 3D Slicer binding option and add missing link to the Math library.
-  set(PYTHON_BINDING OFF)
-  set(3DSLICER_BINDING ON)
+  set(PYTHON_BINDING OFF CACHE BOOL "enable python binding")
+  set(3DSLICER_BINDING ON CACHE BOOL "enable 3DSlicer module")
   link_libraries(m) 
   add_subdirectory(
     ${CMAKE_CURRENT_BINARY_DIR}/rorpo-src
