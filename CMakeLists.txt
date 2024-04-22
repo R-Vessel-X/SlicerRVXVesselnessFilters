@@ -8,7 +8,7 @@ set(EXTENSION_HOMEPAGE "https://github.com/R-Vessel-X/SlicerRVXVesselnessFilters
 set(EXTENSION_CATEGORY "Filtering.Vesselness")
 set(EXTENSION_CONTRIBUTORS "Jonas Lamy (LIRIS), Odyssée Merveille (CREATIS), Bertrand Kerautret (LIRIS), Nicolas Passat (CRESTIC), Thibault Pelletier (Kitware SAS), Laurenn Lam (Kitware SAS)")
 set(EXTENSION_DESCRIPTION "Hessian Vesselness Filters extension")
-set(EXTENSION_ICONURL "https://github.com/R-Vessel-X/SlicerRVXVesselnessFilters/raw/main/Screenshots/RVXLogo.png")
+set(EXTENSION_ICONURL "https://raw.githubusercontent.com/R-Vessel-X/SlicerRVXVesselnessFilters/main/Screenshots/RVXLogo.png")
 set(EXTENSION_SCREENSHOTURLS "https://github.com/R-Vessel-X/SlicerRVXVesselnessFilters/raw/main/Screenshots/RVX_vesselness_example.png")
 set(EXTENSION_DEPENDS "NA") # Specified as a list or "NA" if no dependencies
 
